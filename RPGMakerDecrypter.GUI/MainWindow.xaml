@@ -1,0 +1,230 @@
+<Window x:Class="RPGMakerDecrypter.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="RPG Maker Decrypter GUI" 
+        Height="650" Width="900"
+        WindowStartupLocation="CenterScreen"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="RPG Maker Decrypter" 
+                       Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="Extract and decrypt RPG Maker game files" 
+                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                       HorizontalAlignment="Center"
+                       Opacity="0.7"
+                       Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Input Selection -->
+        <materialDesign:Card Grid.Row="1" Padding="15" Margin="0,0,0,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Input Selection" 
+                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                           Margin="0,0,0,10"/>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <materialDesign:PackIcon Kind="FolderOpen" 
+                                           Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,10,0"
+                                           Width="24" Height="24"/>
+
+                    <TextBox Grid.Column="1"
+                             Text="{Binding InputPath, UpdateSourceTrigger=PropertyChanged}"
+                             materialDesign:HintAssist.Hint="Select RPG Maker archive or game folder"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             IsReadOnly="True"
+                             Margin="0,0,10,0"/>
+
+                    <Button Grid.Column="2"
+                            Command="{Binding BrowseInputCommand}"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Content="Browse File"
+                            Margin="0,0,5,0"/>
+
+                    <Button Grid.Column="3"
+                            Command="{Binding BrowseFolderInputCommand}"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Content="Browse Folder"
+                            ToolTip="For MV/MZ games, select the game folder"/>
+                </Grid>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="34,10,0,0">
+                    <TextBlock Text="Detected Version: " 
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding VersionText}" 
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"
+                               Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+
+        <!-- Output Selection -->
+        <materialDesign:Card Grid.Row="2" Padding="15" Margin="0,0,0,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Output Settings" 
+                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                           Margin="0,0,0,10"/>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <materialDesign:PackIcon Kind="FolderDownload" 
+                                               Grid.Column="0"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,10,0"
+                                               Width="24" Height="24"/>
+
+                        <TextBox Grid.Column="1"
+                                 Text="{Binding OutputPath, UpdateSourceTrigger=PropertyChanged}"
+                                 materialDesign:HintAssist.Hint="Select output folder"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="0,0,10,0"/>
+
+                        <Button Grid.Column="2"
+                                Command="{Binding BrowseOutputCommand}"
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                Content="Browse"/>
+                    </Grid>
+
+                    <CheckBox Grid.Row="1"
+                              IsChecked="{Binding RecreateProject}"
+                              Content="Recreate original project structure"
+                              Margin="34,10,0,0"
+                              ToolTip="Attempts to recreate the original RPG Maker project structure"/>
+                </Grid>
+            </Grid>
+        </materialDesign:Card>
+
+        <!-- Action Buttons -->
+        <Grid Grid.Row="3" Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ProgressBar Grid.Column="0"
+                         Value="{Binding ProgressValue}"
+                         IsIndeterminate="{Binding IsIndeterminate}"
+                         Visibility="{Binding IsProcessing, Converter={StaticResource BooleanToVisibilityConverter}}"
+                         Height="4"
+                         VerticalAlignment="Center"
+                         Margin="0,0,20,0"/>
+
+            <Button Grid.Column="1"
+                    Command="{Binding DecryptCommand}"
+                    Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                    IsEnabled="{Binding IsProcessing, Converter={StaticResource InverseBooleanConverter}}"
+                    Width="150"
+                    Height="40"
+                    Margin="0,0,10,0">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="LockOpen" 
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,8,0"/>
+                    <TextBlock Text="Decrypt" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="2"
+                    Command="{Binding ClearLogCommand}"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"
+                    Content="Clear Log"
+                    Width="100"
+                    Height="40"/>
+        </Grid>
+
+        <!-- Log Output -->
+        <materialDesign:Card Grid.Row="4" Padding="15" Margin="0,10,0,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Output Log" 
+                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                           Margin="0,0,0,10"/>
+
+                <Border Grid.Row="1" 
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        BorderThickness="1"
+                        CornerRadius="4">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding LogMessages}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}"
+                                               FontFamily="Consolas"
+                                               FontSize="11"
+                                               Margin="5,2"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+        </materialDesign:Card>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="5">
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusMessage}"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

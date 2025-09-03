@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGMakerDecrypter.Common", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGMakerDecrypter.MVMZ", "RPGMakerDecrypter.MVMZ\RPGMakerDecrypter.MVMZ.csproj", "{9AE7DB4F-7F8F-4A25-B680-6BE6AF385286}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGMakerDecrypter.GUI", "RPGMakerDecrypter.GUI\RPGMakerDecrypter.GUI.csproj", "{A5C5D7E0-1234-4567-89AB-123456789ABC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{9AE7DB4F-7F8F-4A25-B680-6BE6AF385286}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AE7DB4F-7F8F-4A25-B680-6BE6AF385286}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AE7DB4F-7F8F-4A25-B680-6BE6AF385286}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5C5D7E0-1234-4567-89AB-123456789ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5C5D7E0-1234-4567-89AB-123456789ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5C5D7E0-1234-4567-89AB-123456789ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5C5D7E0-1234-4567-89AB-123456789ABC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
